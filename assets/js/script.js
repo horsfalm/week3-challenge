@@ -27,7 +27,7 @@ var passwordCharacters = function() {
 }
 passwordCharacters();
 
-function makeid(length) {
+function generatePassword(length) {
     var result ="";
     var characters = charRangeLowercase + charRangeUppercase + charRangeNumeric + charRangeSpecial;
     var charactersLength = characters.length;
@@ -37,15 +37,12 @@ function makeid(length) {
     return result;
 }
 
-console.log(makeid(num));
-
-
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
+  var password = generatePassword(num);
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
