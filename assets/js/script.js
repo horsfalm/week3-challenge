@@ -1,47 +1,57 @@
-// Character ranges from which random passwords can be generated
-var charRangeLowercase = "abcdefghijklmnopqrstuvwxyz";
-var charRangeUppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-var charRangeNumeric = "0123456789";
-var charRangeSpecial = "~!@#$%^&*()";
+// DRY text
+const promptText = ("Your password can be a combination of lowercase, uppercase, numeric and/or special characters but must contain at least one of these character types. Include ");
 
+alert("Welcome to Mark's password generator!");
 
-alert("Welcome to Mark's Password Generator!")
+var commencePassGen = function() {
+  // Criteria selection
+  var charLowercase = prompt(promptText + " lower case characters (Y/N)?");
+  var charUppercase = prompt(promptText + " upper case characters (Y/N)?");
+  var charNumeric = prompt(promptText + " Include numeric characters (Y/N)?");
+  var charSpecial = prompt(promptText + " Include special characters (Y/N)?");
 
-// Prompt to force compliant choice
-do { 
-  num = +prompt("Choose password length (must be between 8 and 128 characters long)");
-} while (isNaN(num) || num < 8 || num > 128)
-
-// Criteria selection
-function passwordCreation() {
-  var charLowercase = prompt("Your password be a combination of lowercase, uppercase, numeric and/or special characters and must contain at least one of these character types. Include lower case characters (Y/N)?");
-  var charUppercase = prompt("Your password be a combination of lowercase, uppercase, numeric and/or special characters and must contain at least one of these character types. Include upper case characters (Y/N)?");
-  var charNumeric = prompt("Your password be a combination of lowercase, uppercase, numeric and/or special characters and must contain at least one of these character types. Include numeric characters (Y/N)?");
-  var charSpecial = prompt("Your password be a combination of lowercase, uppercase, numeric and/or special characters and must contain at least one of these character types. Include special characters (Y/N)?");
-
-// Eliminate undesired character ranges
+  // Eliminate undesired character ranges
   if (charLowercase === "N") {
     charRangeLowercase = "";
+  } else {
+    charRangeLowercase = "abcdefghijklmnopqrstuvwxyz";
   }
 
   if (charUppercase === "N") {
     charRangeUppercase = "";
+  } else {
+    charRangeUppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   }
 
   if (charNumeric === "N") {
     charRangeNumeric = "";
+  } else {
+   charRangeNumeric = "0123456789";
   }
 
   if (charSpecial === "N") {
     charRangeSpecial = "";
+  } else {
+    charRangeSpecial = "~!@#$%^&*()"
   }
 
+  // Requirement to choose at least one character range
   if (charLowercase === "N" && charUppercase === "N" && charNumeric === "N" && charSpecial === "N") {
     alert("You must choose at least one character type for your password. Please choose again.");
-    passwordCreation();
+    return commencePassGen();
   }
+
+  // Prompt to force compliant choice
+  do { 
+    num = +prompt("Choose password length (must be between 8 and 128 characters long)");
+  } while (isNaN(num) || num < 8 || num > 128);
+
+  // Instruction to click
+  alert("Please click the 'Generate Password' button now.");
+
 }
-passwordCreation();
+
+commencePassGen();
 
 function generatePassword(length) {
   var result ="";
@@ -62,9 +72,7 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
-}
+};
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
